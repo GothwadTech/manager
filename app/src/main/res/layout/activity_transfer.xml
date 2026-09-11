@@ -4,16 +4,78 @@
     android:layout_height="match_parent"
     android:background="@color/bg"
     android:orientation="vertical"
-    android:padding="18dp">
+    android:paddingLeft="24dp"
+    android:paddingTop="18dp"
+    android:paddingRight="24dp"
+    android:paddingBottom="14dp">
 
+    <!-- Screen Header -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp"
-        android:background="@color/panel"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/badge_box"
+            android:gravity="center"
+            android:text="⇄"
+            android:textColor="@color/accent"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/remote_transfer"
+                android:textColor="@color/text"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:includeFontPadding="false"
+                android:text="Gothwad Manager • Phone to TV Direct Wi-Fi Transfer"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/badge_pill"
+            android:paddingLeft="12dp"
+            android:paddingTop="6dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="6dp"
+            android:text="Press Back to Return"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- Hero Card: Instructions & QR Code -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="176dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/card_panel"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="14dp">
 
+        <!-- Left: URL and Steps -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -26,54 +88,145 @@
                 android:layout_height="wrap_content"
                 android:text="@string/transfer_heading"
                 android:textColor="@color/text"
-                android:textSize="28sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/text_server_url"
+            <!-- Highlighted URL Box -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:textColor="@color/accent"
-                android:textIsSelectable="true"
-                android:textSize="22sp" />
+                android:layout_marginTop="8dp"
+                android:background="@drawable/badge_pill"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:paddingTop="6dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="6dp">
+
+                <TextView
+                    android:id="@+id/text_server_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="@color/accent"
+                    android:textIsSelectable="true"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/text_upload_path"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/muted"
+                android:layout_marginTop="6dp"
+                android:singleLine="true"
+                android:textColor="@color/text_secondary"
                 android:textIsSelectable="true"
-                android:textSize="15sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/text_server_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/muted"
-                android:textSize="14sp" />
+                android:layout_marginTop="4dp"
+                android:singleLine="true"
+                android:textColor="@color/accent_green_light"
+                android:textSize="12sp" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/image_qr"
-            android:layout_width="158dp"
-            android:layout_height="158dp"
-            android:background="#FFFFFF"
-            android:contentDescription="@string/upload_qr_description"
-            android:padding="8dp" />
+        <!-- Right: QR Code Frame -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/image_qr"
+                android:layout_width="126dp"
+                android:layout_height="126dp"
+                android:background="@drawable/qr_frame"
+                android:contentDescription="@string/upload_qr_description"
+                android:padding="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Scan with Camera"
+                android:textColor="@color/text_secondary"
+                android:textSize="10sp" />
+        </LinearLayout>
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/upload_list"
+    <!-- Uploads List Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TRANSFERRED FILES"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="4dp"
-        android:layout_weight="1"
-        android:descendantFocusability="afterDescendants"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="6dp"
-        android:focusable="false"
-        android:listSelector="@android:color/transparent" />
+        android:layout_marginTop="6dp"
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/upload_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="afterDescendants"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="6dp"
+            android:focusable="false"
+            android:listSelector="@android:color/transparent" />
+
+        <!-- Empty Uploads View -->
+        <LinearLayout
+            android:id="@+id/upload_empty_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/badge_pill"
+                android:gravity="center"
+                android:text="📲"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="No files transferred yet"
+                android:textColor="@color/text"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Open the link above on your phone to upload APKs, videos, or documents"
+                android:textColor="@color/muted"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

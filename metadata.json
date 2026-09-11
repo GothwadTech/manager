@@ -1,6 +1,6 @@
 {
   "name": "Gothwad Manager",
-  "description": "All-in-one Gothwad Manager for Android",
+  "description": "Gothwad Manager - Fast file manager and local Wi-Fi transfer tool for Android TV",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TVFileBox"
+rootProject.name = "GothwadManager"
 include ':app'

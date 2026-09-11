@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- English is the default for every non-Chinese system locale. -->
-    <string name="app_name">TV FileBox</string>
+    <string name="app_name">Gothwad Manager</string>
     <string name="home">Home</string>
     <string name="new_folder">New folder</string>
     <string name="remote_transfer">Remote transfer</string>
@@ -22,6 +21,7 @@
     <string name="upload_qr_description">QR code for the upload address</string>
 
     <string name="storage_permission_denied">Storage permission was not granted. Only the app upload folder is available.</string>
+    <string name="allow_all_files_access">Please grant All Files Access to manage files on TV storage</string>
     <string name="current_path">Current path: %1$s</string>
     <string name="saved_path">Full file save path: %1$s</string>
     <string name="cannot_access_directory">This folder cannot be accessed</string>
@@ -47,7 +47,7 @@
     <string name="cut_same_folder">The item is already in this folder</string>
 
     <string name="file_not_found">File not found</string>
-    <string name="allow_unknown_sources_retry">Allow TV FileBox to install unknown apps, then open the APK again</string>
+    <string name="allow_unknown_sources_retry">Allow Gothwad Manager to install unknown apps, then open the APK again</string>
     <string name="allow_unknown_sources_settings">Allow installation from unknown sources in system settings</string>
     <string name="no_app_to_open_file">No app can open this file</string>
     <string name="invalid_file_name">Invalid file name</string>
@@ -81,4 +81,103 @@
     <string name="web_network_error">Network error</string>
     <string name="web_delete_prefix">Permanently delete</string>
     <string name="web_delete_suffix">\? This action cannot be undone.</string>
+
+    <!-- Top 10 Features Strings -->
+    <!-- 1. Search -->
+    <string name="search">Search</string>
+    <string name="search_hint">Enter file or folder name…</string>
+    <string name="search_in_path">Search in %1$s</string>
+    <string name="search_results_title">Found %1$d item(s) for \"%2$s\"</string>
+    <string name="clear_search">Clear Filter</string>
+    <string name="no_search_results">No matching files found</string>
+
+    <!-- 2. Sort -->
+    <string name="sort">Sort</string>
+    <string name="sort_by">Sort files by</string>
+    <string name="sort_name_asc">Name (A to Z)</string>
+    <string name="sort_name_desc">Name (Z to A)</string>
+    <string name="sort_date_desc">Date modified (Newest first)</string>
+    <string name="sort_date_asc">Date modified (Oldest first)</string>
+    <string name="sort_size_desc">File size (Largest first)</string>
+    <string name="sort_size_asc">File size (Smallest first)</string>
+    <string name="sort_type">File type / Extension</string>
+
+    <!-- 3. Storage & Drive Switcher -->
+    <string name="storage_overview">Storage</string>
+    <string name="select_storage_drive">Select Storage Drive</string>
+    <string name="internal_storage">Internal Storage</string>
+    <string name="usb_storage">USB / External Drive</string>
+    <string name="app_uploads_folder">App Uploads Folder</string>
+    <string name="storage_stats">%1$s free of %2$s (%3$d%% used)</string>
+
+    <!-- 4. Categories -->
+    <string name="categories">Categories</string>
+    <string name="category_all">All Files</string>
+    <string name="category_videos">Videos</string>
+    <string name="category_music">Music &amp; Audio</string>
+    <string name="category_photos">Photos &amp; Images</string>
+    <string name="category_apks">APKs &amp; Apps</string>
+    <string name="category_documents">Documents</string>
+    <string name="category_archives">Archives (ZIP)</string>
+    <string name="category_title">%1$s (%2$d items)</string>
+
+    <!-- 5. Rename & File Actions -->
+    <string name="action_options">Options</string>
+    <string name="properties">Properties</string>
+
+    <!-- 6. ZIP Archive -->
+    <string name="extract_zip">Extract ZIP Here</string>
+    <string name="compress_to_zip">Compress to ZIP</string>
+    <string name="extracting_zip">Extracting archive…</string>
+    <string name="zip_extracted_success">Extracted to: %1$s</string>
+    <string name="compressing_zip">Compressing files to ZIP…</string>
+    <string name="zip_compressed_success">ZIP created: %1$s</string>
+    <string name="zip_failed">ZIP operation failed</string>
+
+    <!-- 7. Viewers -->
+    <string name="image_viewer">Image Viewer</string>
+    <string name="text_viewer">Text Viewer</string>
+    <string name="previous_item">Previous</string>
+    <string name="next_item">Next</string>
+    <string name="image_info">%1$s  ·  %2$d × %3$d  ·  %4$s</string>
+    <string name="text_meta">%1$d lines  ·  %2$s  ·  UTF-8</string>
+    <string name="text_load_error">Could not read text file.</string>
+
+    <!-- 8. Properties -->
+    <string name="file_properties_title">Properties: %1$s</string>
+    <string name="prop_name">Name: %1$s</string>
+    <string name="prop_type">Type: %1$s</string>
+    <string name="prop_size">Size: %1$s (%2$d bytes)</string>
+    <string name="prop_location">Location: %1$s</string>
+    <string name="prop_modified">Modified: %1$s</string>
+    <string name="prop_items">Contains: %1$d files, %2$d folders</string>
+    <string name="prop_permissions">Readable: %1$s · Writable: %2$s</string>
+
+    <!-- 9. Multi-Select & Batch Operations -->
+    <string name="multiselect">Multi-Select</string>
+    <string name="select_all">Select All</string>
+    <string name="deselect_all">Deselect All</string>
+    <string name="selected_count">%1$d Selected</string>
+    <string name="batch_delete">Delete (%1$d)</string>
+    <string name="batch_copy">Copy (%1$d)</string>
+    <string name="batch_move">Move (%1$d)</string>
+    <string name="batch_zip">ZIP (%1$d)</string>
+    <string name="batch_delete_confirm">Permanently delete %1$d selected items? This cannot be undone.</string>
+    <string name="batch_delete_success">Deleted %1$d items</string>
+    <string name="batch_copied">%1$d items ready to copy</string>
+    <string name="batch_cut">%1$d items ready to move</string>
+    <string name="exit_multiselect">Exit</string>
+
+    <!-- 10. App Manager -->
+    <string name="app_manager">Apps</string>
+    <string name="installed_apps">Installed TV Apps</string>
+    <string name="launch_app">Launch</string>
+    <string name="backup_apk">Backup APK</string>
+    <string name="uninstall_app">Uninstall</string>
+    <string name="app_backup_success">APK backed up to: %1$s</string>
+    <string name="app_backup_failed">Failed to extract APK</string>
+    <string name="loading_apps">Scanning installed apps…</string>
+    <string name="no_apps_found">No third-party apps found</string>
+    <string name="close">Close</string>
+    <string name="calculating">Calculating…</string>
 </resources>

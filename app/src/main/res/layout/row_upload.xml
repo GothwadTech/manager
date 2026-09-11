@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="62dp"
-    android:background="@color/panel"
+    android:layout_height="68dp"
+    android:background="@drawable/row_selector"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingLeft="18dp"
-    android:paddingRight="10dp">
+    android:paddingLeft="14dp"
+    android:paddingRight="12dp">
+
+    <TextView
+        android:id="@+id/upload_icon"
+        android:layout_width="54dp"
+        android:layout_height="38dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="APK"
+        android:textColor="@color/accent"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="10dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -21,26 +34,28 @@
             android:ellipsize="middle"
             android:singleLine="true"
             android:textColor="@color/text"
-            android:textSize="18sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/upload_meta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/muted"
-            android:textSize="13sp" />
+            android:layout_marginTop="3dp"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <Button
         android:id="@+id/upload_open"
-        style="@style/ActionButton"
+        style="@style/GreenActionButton"
         android:focusable="true"
         android:nextFocusRight="@id/upload_delete"
-        android:text="@string/open" />
+        android:text="@string/install" />
 
     <Button
         android:id="@+id/upload_delete"
-        style="@style/ActionButton"
+        style="@style/DangerActionButton"
         android:focusable="true"
         android:nextFocusLeft="@id/upload_open"
         android:text="@string/delete" />
