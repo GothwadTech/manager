@@ -1,11 +1,17 @@
-<div align="center">
+Gothwad Manager
+=============
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Gothwad Manager is an all-in-one file management tool for Android.
 
-  <h1>Built with AI Studio</h2>
+It is Simple, Small, Fast and Efficient File Explorer. Supports RTL and shows size of folders across storages. Designed for all Android devices including Phones, Tablets and Android TV.
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+Top Features
+============
+★ **Full Featured File Manager** All features of file management including cut, copy, delete, rename, compress, extract, and search.
+★ **Smart Library File Explorer** Categorize files into Downloads, Images, Videos, Audio, Documents, Archives and APKs.
+★ **Storage Management** Access Internal Storage, SD Cards, USB Storage and OTG.
+★ **Network Manager** Transfer files with FTP Server from phone to PC.
+★ **Document Editor** Easily edit files on the go.
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
 
-</div>
+

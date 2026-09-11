@@ -1,0 +1,6 @@
+{
+  "name": "Gothwad Manager",
+  "description": "All-in-one Gothwad Manager for Android",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
