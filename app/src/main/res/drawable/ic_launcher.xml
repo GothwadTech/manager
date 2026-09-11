@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#35B7FF" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+    <item android:left="7dp" android:right="7dp" android:top="9dp" android:bottom="9dp">
+        <bitmap
+            android:gravity="fill"
+            android:src="@drawable/material_folder_open_black_48dp" />
+    </item>
+</layer-list>

@@ -1,0 +1,2 @@
+-dontwarn org.nanohttpd.**
+-keep class org.nanohttpd.** { *; }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="62dp"
+    android:background="@color/panel"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="18dp"
+    android:paddingRight="10dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/upload_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:singleLine="true"
+            android:textColor="@color/text"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/upload_meta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/muted"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/upload_open"
+        style="@style/ActionButton"
+        android:focusable="true"
+        android:nextFocusRight="@id/upload_delete"
+        android:text="@string/open" />
+
+    <Button
+        android:id="@+id/upload_delete"
+        style="@style/ActionButton"
+        android:focusable="true"
+        android:nextFocusLeft="@id/upload_open"
+        android:text="@string/delete" />
+</LinearLayout>

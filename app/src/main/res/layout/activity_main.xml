@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical"
+    android:padding="18dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/app_name"
+            android:textColor="@color/text"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button_home"
+            style="@style/ActionButton"
+            android:text="@string/home" />
+
+        <Button
+            android:id="@+id/button_new_folder"
+            style="@style/ActionButton"
+            android:text="@string/new_folder" />
+
+        <Button
+            android:id="@+id/button_transfer"
+            style="@style/ActionButton"
+            android:text="@string/remote_transfer" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_path"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ellipsize="middle"
+        android:singleLine="true"
+        android:textColor="@color/muted"
+        android:textSize="16sp" />
+
+    <ListView
+        android:id="@+id/file_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="6dp"
+        android:drawSelectorOnTop="false"
+        android:listSelector="@android:color/transparent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/settings_key_hint"
+        android:textColor="@color/muted"
+        android:textSize="14sp" />
+</LinearLayout>

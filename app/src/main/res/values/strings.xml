@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- English is the default for every non-Chinese system locale. -->
+    <string name="app_name">TV FileBox</string>
+    <string name="home">Home</string>
+    <string name="new_folder">New folder</string>
+    <string name="remote_transfer">Remote transfer</string>
+    <string name="open">Open</string>
+    <string name="install">Install</string>
+    <string name="rename">Rename</string>
+    <string name="delete">Delete</string>
+    <string name="copy">Copy</string>
+    <string name="cut">Cut</string>
+    <string name="paste">Paste</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">OK</string>
+    <string name="create">Create</string>
+    <string name="folder">Folder</string>
+    <string name="empty_directory">This folder is empty</string>
+    <string name="settings_key_hint">Settings key: copy, cut, paste, rename, or permanently delete the selected file/folder</string>
+    <string name="transfer_heading">Upload files from your phone to the TV</string>
+    <string name="upload_qr_description">QR code for the upload address</string>
+
+    <string name="storage_permission_denied">Storage permission was not granted. Only the app upload folder is available.</string>
+    <string name="current_path">Current path: %1$s</string>
+    <string name="saved_path">Full file save path: %1$s</string>
+    <string name="cannot_access_directory">This folder cannot be accessed</string>
+    <string name="top_directory_reached">The top-level folder has been reached</string>
+    <string name="folder_name_hint">Folder name</string>
+    <string name="invalid_simple_name">The name cannot be empty or contain a path separator</string>
+    <string name="file_or_folder_exists">A file or folder with that name already exists</string>
+    <string name="create_folder_failed">Could not create the folder. The current folder may be read-only.</string>
+    <string name="invalid_name">Invalid name</string>
+    <string name="file_exists">A file with that name already exists</string>
+    <string name="rename_failed">Rename failed</string>
+    <string name="permanent_delete">Permanently delete</string>
+    <string name="delete_confirm">Permanently delete “%1$s”? This action cannot be undone.</string>
+    <string name="delete_failed">Delete failed</string>
+    <string name="delete_failed_detailed">Delete failed. The file may be in use or the folder may be read-only.</string>
+    <string name="select_file_first">Select an item in the file list first</string>
+    <string name="copied_to_clipboard">Ready to copy: %1$s</string>
+    <string name="cut_to_clipboard">Ready to move: %1$s</string>
+    <string name="paste_success">Pasted into: %1$s</string>
+    <string name="paste_failed">Paste failed. Check the available space and folder permissions.</string>
+    <string name="clipboard_source_missing">The copied or cut item no longer exists</string>
+    <string name="cannot_paste_into_itself">A folder cannot be pasted into itself or one of its subfolders</string>
+    <string name="cut_same_folder">The item is already in this folder</string>
+
+    <string name="file_not_found">File not found</string>
+    <string name="allow_unknown_sources_retry">Allow TV FileBox to install unknown apps, then open the APK again</string>
+    <string name="allow_unknown_sources_settings">Allow installation from unknown sources in system settings</string>
+    <string name="no_app_to_open_file">No app can open this file</string>
+    <string name="invalid_file_name">Invalid file name</string>
+    <string name="too_many_duplicate_names">Too many files have the same name</string>
+
+    <string name="http_start_failed">Could not start the HTTP server</string>
+    <string name="ports_unavailable">Ports 8080–8090 are unavailable</string>
+    <string name="connect_wifi_first">Connect to Wi-Fi first</string>
+    <string name="no_lan_address">The server started, but no local IPv4 address was found</string>
+    <string name="server_running">Server running · Available only while this page is open · Phone and TV must use the same Wi-Fi</string>
+    <string name="qr_generation_failed">The server is running, but QR code generation failed: %1$s</string>
+
+    <string name="http_invalid_link">This link is invalid or has expired</string>
+    <string name="http_not_found">Not found</string>
+    <string name="http_operation_failed">Operation failed: %1$s</string>
+    <string name="http_no_file">No file was received</string>
+    <string name="http_file_too_large">The file exceeds the 2 GB limit</string>
+    <string name="http_insufficient_space">Not enough storage space on the TV</string>
+    <string name="http_upload_success">Upload complete: %1$s</string>
+    <string name="http_opened_on_tv">Opened on the TV</string>
+    <string name="http_deleted">Permanently deleted</string>
+    <string name="http_unknown_action">Unknown action</string>
+
+    <string name="web_no_uploads">No uploaded files</string>
+    <string name="web_install_on_tv">Install on TV</string>
+    <string name="web_open_on_tv">Open on TV</string>
+    <string name="web_upload_heading">Upload files to the TV</string>
+    <string name="web_choose_files">Choose files</string>
+    <string name="web_uploaded_files">Uploaded files</string>
+    <string name="web_uploading_prefix">Uploading</string>
+    <string name="web_network_error">Network error</string>
+    <string name="web_delete_prefix">Permanently delete</string>
+    <string name="web_delete_suffix">\? This action cannot be undone.</string>
+</resources>
