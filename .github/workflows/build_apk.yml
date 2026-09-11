@@ -57,9 +57,16 @@ jobs:
           echo "v_code=$V_CODE" >> $GITHUB_OUTPUT
           echo "v_name=$V_NAME" >> $GITHUB_OUTPUT
 
-      - name: Build Release APK, Debug APK and AAB Bundle with Gradle
+      - name: Build Release APK and Debug APK with Gradle
         run: |
-          ./gradlew assembleRelease assembleDebug bundleRelease \
+          ./gradlew assembleRelease assembleDebug \
+            -PversionCode=${{ steps.versioning.outputs.v_code }} \
+            -PversionName=${{ steps.versioning.outputs.v_name }} \
+            --no-daemon
+
+      - name: Build Play Store AAB Bundle with Gradle
+        run: |
+          ./gradlew bundleRelease \
             -PversionCode=${{ steps.versioning.outputs.v_code }} \
             -PversionName=${{ steps.versioning.outputs.v_name }} \
             --no-daemon
