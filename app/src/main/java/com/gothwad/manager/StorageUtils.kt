@@ -118,4 +118,19 @@ object StorageUtils {
             Pair(0L, 0L)
         }
     }
+
+    fun findLocalIpv4(): String? {
+        try {
+            val interfaces = java.net.NetworkInterface.getNetworkInterfaces() ?: return null
+            for (network in java.util.Collections.list(interfaces)) {
+                if (!network.isUp || network.isLoopback) continue
+                for (address in java.util.Collections.list(network.inetAddresses)) {
+                    if (address is java.net.Inet4Address && !address.isLoopbackAddress && address.isSiteLocalAddress) {
+                        return address.hostAddress
+                    }
+                }
+            }
+        } catch (ignored: Exception) {}
+        return null
+    }
 }

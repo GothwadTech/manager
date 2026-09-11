@@ -141,6 +141,21 @@
             android:text="📦 Apps" />
 
         <Button
+            android:id="@+id/button_cleaner"
+            style="@style/ActionButton"
+            android:text="🧹 Clean" />
+
+        <Button
+            android:id="@+id/button_dual_pane"
+            style="@style/ActionButton"
+            android:text="🔲 Dual" />
+
+        <Button
+            android:id="@+id/button_toolbox"
+            style="@style/ActionButton"
+            android:text="⚡ Tools" />
+
+        <Button
             android:id="@+id/button_multiselect"
             style="@style/ActionButton"
             android:text="☑ Select" />
@@ -185,6 +200,19 @@
             android:textColor="@color/text"
             android:textSize="12sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/button_bookmark_path"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="4dp"
+            android:text="⭐"
+            android:textColor="@color/accent"
+            android:textSize="15sp" />
 
         <!-- Filter / Search active indicator -->
         <LinearLayout

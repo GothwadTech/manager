@@ -30,11 +30,17 @@ object FileUtils {
     }
 
     @JvmStatic
-    fun listFiles(directory: File?): List<File> {
+    @JvmOverloads
+    fun listFiles(directory: File?, showHidden: Boolean = false): List<File> {
         val result = mutableListOf<File>()
         val children = directory?.listFiles()
         if (children != null) {
-            Collections.addAll(result, *children)
+            for (file in children) {
+                if (!showHidden && file.name.startsWith(".")) {
+                    continue
+                }
+                result.add(file)
+            }
         }
         result.sortWith { left, right ->
             if (left.isDirectory != right.isDirectory) {

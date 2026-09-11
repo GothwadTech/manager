@@ -57,12 +57,18 @@ class MainActivity : Activity() {
     private var confirmLongPressHandled: Boolean = false
     private var currentSortOption: FileSortOption = FileSortOption.NAME_ASC
     private var isFilterActive: Boolean = false
+    private var showHiddenFiles: Boolean = false
+    private lateinit var ftpServer: SimpleFtpServer
+    private var bookmarkPathBtn: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        showHiddenFiles = prefs.getBoolean("show_hidden_files", false)
+        ftpServer = SimpleFtpServer(this)
+
         val savedSort = prefs.getString(KEY_SORT_OPTION, FileSortOption.NAME_ASC.name)
         currentSortOption = try {
             FileSortOption.valueOf(savedSort ?: FileSortOption.NAME_ASC.name)
@@ -71,6 +77,7 @@ class MainActivity : Activity() {
         }
 
         pathView = findViewById(R.id.text_path)
+        bookmarkPathBtn = findViewById(R.id.button_bookmark_path)
         listView = findViewById(R.id.file_list)
         filterBadgeLayout = findViewById(R.id.layout_filter_badge)
         filterStatusText = findViewById(R.id.text_filter_status)
@@ -79,6 +86,18 @@ class MainActivity : Activity() {
         storageProgressBar = findViewById(R.id.progress_storage)
         batchBarLayout = findViewById(R.id.layout_batch_bar)
         batchCountText = findViewById(R.id.text_batch_count)
+
+        bookmarkPathBtn?.setOnClickListener {
+            val dir = currentDirectory ?: return@setOnClickListener
+            if (BookmarkManager.isBookmarked(this, dir)) {
+                BookmarkManager.removeBookmark(this, dir)
+                Toast.makeText(this, R.string.bookmark_removed, Toast.LENGTH_SHORT).show()
+            } else {
+                BookmarkManager.addBookmark(this, dir)
+                Toast.makeText(this, getString(R.string.bookmark_added, dir.name), Toast.LENGTH_SHORT).show()
+            }
+            refresh()
+        }
 
         initialDirectory = Environment.getExternalStorageDirectory()
         currentDirectory = initialDirectory
@@ -95,6 +114,11 @@ class MainActivity : Activity() {
         refresh()
 
         findViewById<View>(R.id.button_search).requestFocus()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ftpServer.stop()
     }
 
     override fun onResume() {
@@ -193,7 +217,22 @@ class MainActivity : Activity() {
             startActivity(Intent(this, AppManagerActivity::class.java))
         }
 
-        // 9. Multi-Select Toggle
+        // 2. Storage Cleaner
+        findViewById<Button>(R.id.button_cleaner).setOnClickListener {
+            startActivity(Intent(this, StorageCleanerActivity::class.java))
+        }
+
+        // 9. Dual Pane Mode
+        findViewById<Button>(R.id.button_dual_pane).setOnClickListener {
+            startActivity(Intent(this, DualPaneActivity::class.java))
+        }
+
+        // Central Tools Menu (Recycle Bin, Vault, FTP, LAN, Bookmarks, Hidden Files)
+        findViewById<Button>(R.id.button_toolbox).setOnClickListener {
+            showToolsMenu()
+        }
+
+        // Multi-Select Toggle
         findViewById<Button>(R.id.button_multiselect).setOnClickListener {
             toggleMultiSelectMode()
         }
@@ -214,6 +253,48 @@ class MainActivity : Activity() {
             filterBadgeLayout.visibility = View.GONE
             refresh()
         }
+    }
+
+    private fun showToolsMenu() {
+        val trashCount = TrashManager.getTrashCount(this)
+        val ftpStatus = if (ftpServer.isServerRunning()) "Running 🟢" else "Stopped ⚪"
+        val hiddenStatus = if (showHiddenFiles) "ON 👁️" else "OFF 🚫"
+
+        val items = arrayOf(
+            "🗑️ ${getString(R.string.recycle_bin)} ($trashCount)",
+            "🧹 ${getString(R.string.storage_cleaner)}",
+            "⭐ ${getString(R.string.bookmarks)}",
+            "🕒 ${getString(R.string.recent_files)}",
+            "🔲 ${getString(R.string.dual_pane)}",
+            "🛰️ ${getString(R.string.ftp_server)} ($ftpStatus)",
+            "🌐 ${getString(R.string.lan_scanner)}",
+            "🔒 ${getString(R.string.private_safe)}",
+            "👁️ ${getString(R.string.show_hidden_files)} ($hiddenStatus)"
+        )
+
+        AlertDialog.Builder(this)
+            .setTitle("⚡ Advanced TV Tools")
+            .setItems(items) { _, which ->
+                when (which) {
+                    0 -> DialogHelper.showTrashDialog(this) { refresh() }
+                    1 -> startActivity(Intent(this, StorageCleanerActivity::class.java))
+                    2 -> DialogHelper.showBookmarksDialog(this, { folder -> openDirectory(folder) }) { refresh() }
+                    3 -> DialogHelper.showRecentFilesDialog(this) { file -> openEntry(file) }
+                    4 -> startActivity(Intent(this, DualPaneActivity::class.java))
+                    5 -> DialogHelper.showFtpDialog(this, ftpServer)
+                    6 -> DialogHelper.showLanScannerDialog(this)
+                    7 -> DialogHelper.showVaultDialog(this) { refresh() }
+                    8 -> {
+                        showHiddenFiles = !showHiddenFiles
+                        prefs.edit().putBoolean("show_hidden_files", showHiddenFiles).apply()
+                        val statusText = if (showHiddenFiles) getString(R.string.hidden_files_on) else getString(R.string.hidden_files_off)
+                        Toast.makeText(this, statusText, Toast.LENGTH_SHORT).show()
+                        refresh()
+                    }
+                }
+            }
+            .setPositiveButton(R.string.close, null)
+            .show()
     }
 
     private fun setupBatchBarButtons() {
@@ -269,7 +350,13 @@ class MainActivity : Activity() {
             currentDirectory = dir
         }
         pathView.text = getString(R.string.current_path, dir.absolutePath)
-        val files = FileUtils.listFiles(dir)
+
+        val isBookmarked = currentDirectory?.let { BookmarkManager.isBookmarked(this, it) } ?: false
+        bookmarkPathBtn?.setTextColor(
+            if (isBookmarked) 0xFFFFD700.toInt() else 0xFF64748B.toInt()
+        )
+
+        val files = FileUtils.listFiles(dir, showHiddenFiles)
         val sorted = FileSortOption.sort(files, currentSortOption)
         adapter.replace(sorted)
         updateStorageDriveOverview()
@@ -303,6 +390,12 @@ class MainActivity : Activity() {
         }
 
         val ext = file.extension.lowercase(Locale.US)
+
+        // Video playback with automatic subtitle detection
+        if (FileCategory.VIDEOS.matches(file)) {
+            VideoSubtitleHelper.playVideoWithSubtitleOption(this, file)
+            return
+        }
 
         // Built-in image viewer
         if (FileCategory.PHOTOS.matches(file)) {
@@ -554,6 +647,18 @@ class MainActivity : Activity() {
         } else {
             actions.add(getString(R.string.compress_to_zip))
         }
+        if (FileCategory.VIDEOS.matches(selected)) {
+            actions.add(getString(R.string.play_with_subtitles))
+        }
+        if (selected.isDirectory) {
+            if (BookmarkManager.isBookmarked(this, selected)) {
+                actions.add(getString(R.string.remove_bookmark))
+            } else {
+                actions.add(getString(R.string.add_bookmark))
+            }
+        }
+        actions.add(getString(R.string.move_to_vault))
+        actions.add(getString(R.string.move_to_trash))
         actions.add(getString(R.string.permanent_delete))
 
         AlertDialog.Builder(this)
@@ -577,6 +682,33 @@ class MainActivity : Activity() {
                     getString(R.string.properties) -> DialogHelper.showPropertiesDialog(this, selected)
                     getString(R.string.extract_zip) -> extractZipArchive(selected)
                     getString(R.string.compress_to_zip) -> compressSingleFile(selected)
+                    getString(R.string.play_with_subtitles) -> VideoSubtitleHelper.playVideoWithSubtitleOption(this, selected)
+                    getString(R.string.add_bookmark) -> {
+                        BookmarkManager.addBookmark(this, selected)
+                        Toast.makeText(this, getString(R.string.bookmark_added, selected.name), Toast.LENGTH_SHORT).show()
+                        refresh()
+                    }
+                    getString(R.string.remove_bookmark) -> {
+                        BookmarkManager.removeBookmark(this, selected)
+                        Toast.makeText(this, R.string.bookmark_removed, Toast.LENGTH_SHORT).show()
+                        refresh()
+                    }
+                    getString(R.string.move_to_vault) -> {
+                        if (VaultManager.moveToVault(this, selected)) {
+                            Toast.makeText(this, getString(R.string.moved_to_vault, selected.name), Toast.LENGTH_SHORT).show()
+                            refresh()
+                        } else {
+                            Toast.makeText(this, "Failed to move to vault", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    getString(R.string.move_to_trash) -> {
+                        if (TrashManager.moveToTrash(this, selected)) {
+                            Toast.makeText(this, getString(R.string.moved_to_trash, selected.name), Toast.LENGTH_SHORT).show()
+                            refresh()
+                        } else {
+                            Toast.makeText(this, "Failed to move to trash", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                     getString(R.string.permanent_delete) -> deleteEntry(selected)
                 }
             }

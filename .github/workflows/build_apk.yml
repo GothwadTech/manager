@@ -73,12 +73,25 @@ jobs:
 
       - name: Sign Release APK & AAB
         env:
-          KEYSTORE_BASE64: ${{ secrets.RELEASE_KEYSTORE_BASE64 }}
-          KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASSWORD || 'android123' }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS || '' }}
-          KEY_PASS: ${{ secrets.KEY_PASSWORD || 'android123' }}
+          KEYSTORE_BASE64: ${{ secrets.SIGNING_KEY || secrets.RELEASE_KEYSTORE_BASE64 || secrets.KEYSTORE_BASE64 || secrets.KEYSTORE || secrets.RELEASE_KEYSTORE }}
+          KEYSTORE_PASS: ${{ secrets.KEY_STORE_PASSWORD || secrets.KEYSTORE_PASSWORD || secrets.KEYSTORE_PASS || secrets.KEY_PASS || secrets.KEY_PASSWORD || 'android123' }}
+          KEY_ALIAS: ${{ secrets.ALIAS || secrets.KEY_ALIAS || secrets.KEY_NAME || '' }}
+          KEY_PASS: ${{ secrets.KEY_PASSWORD || secrets.KEY_PASS || secrets.KEY_STORE_PASSWORD || secrets.KEYSTORE_PASSWORD || secrets.KEYSTORE_PASS || 'android123' }}
           V_NAME: ${{ steps.versioning.outputs.v_name }}
         run: |
+          echo "=== GitHub Secrets Diagnostic ==="
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "Keystore Secret: FOUND (${#KEYSTORE_BASE64} chars)"
+          else
+            echo "Keystore Secret: NOT FOUND / EMPTY (will use self-contained keystore)"
+          fi
+          if [ -n "$KEY_ALIAS" ]; then
+            echo "Key Alias: $KEY_ALIAS"
+          else
+            echo "Key Alias: auto-detect"
+          fi
+          echo "=================================="
+
           echo "Locating generated Release APK, Debug APK, and AAB..."
           UNSIGNED_APK=$(find app/build/outputs/apk/release/ -name "*.apk" | head -n 1)
           DEBUG_APK=$(find app/build/outputs/apk/debug/ -name "*.apk" | head -n 1)
@@ -94,23 +107,33 @@ jobs:
 
           # Store keystore in secure temporary location outside release outputs
           KS_PATH="/tmp/gothwad_release_key.jks"
+          rm -f "$KS_PATH"
           
           if [ -n "$KEYSTORE_BASE64" ]; then
-            echo "Using Permanent Keystore from GitHub Secrets..."
-            echo "$KEYSTORE_BASE64" | base64 -d > "$KS_PATH"
-          else
-            echo "⚠️ No GitHub Secret found! Generating temporary keystore..."
+            echo "Decoding Keystore from GitHub Secrets..."
+            echo "$KEYSTORE_BASE64" | tr -d '\r\n ' | base64 -d > "$KS_PATH" || echo "$KEYSTORE_BASE64" | base64 -d > "$KS_PATH"
+          fi
+
+          if [ ! -s "$KS_PATH" ]; then
+            echo "⚠️ No valid Keystore from secrets! Generating self-contained signing keystore..."
             DEFAULT_ALIAS="${KEY_ALIAS:-gothwad_key}"
+            # In Java 17 PKCS12 keystores, storepass and keypass MUST be identical
+            KEYSTORE_PASS="${KEYSTORE_PASS:-android123}"
+            KEY_PASS="$KEYSTORE_PASS"
             keytool -genkey -v \
               -keystore "$KS_PATH" \
+              -storetype PKCS12 \
               -keyalg RSA -keysize 2048 -validity 10000 \
               -alias "$DEFAULT_ALIAS" \
               -dname "CN=Gothwad Manager, OU=AppDev, O=Gothwad, C=IN" \
-              -storepass "$KEYSTORE_PASS" -keypass "$KEY_PASS"
+              -storepass "$KEYSTORE_PASS" -keypass "$KEYSTORE_PASS"
           fi
 
           # Dynamically detect exact Alias name from the keystore
           DETECTED_ALIAS=$(keytool -list -v -keystore "$KS_PATH" -storepass "$KEYSTORE_PASS" 2>/dev/null | grep -i "Alias name:" | head -n 1 | sed 's/.*Alias name: //I' | tr -d '\r' | xargs)
+          if [ -z "$DETECTED_ALIAS" ] && [ -n "$KEY_PASS" ]; then
+            DETECTED_ALIAS=$(keytool -list -v -keystore "$KS_PATH" -storepass "$KEY_PASS" 2>/dev/null | grep -i "Alias name:" | head -n 1 | sed 's/.*Alias name: //I' | tr -d '\r' | xargs)
+          fi
           
           if [ -n "$KEY_ALIAS" ]; then
             ACTUAL_ALIAS="$KEY_ALIAS"
@@ -135,10 +158,25 @@ jobs:
               cp "$UNSIGNED_APK" "$UNALIGNED_TEMP"
             fi
             
+            echo "Signing APK with apksigner..."
             $APKSIGNER sign \
               --ks "$KS_PATH" \
               --ks-key-alias "$ACTUAL_ALIAS" \
               --ks-pass "pass:$KEYSTORE_PASS" \
+              --key-pass "pass:$KEY_PASS" \
+              --out output_release/GothwadManager-v${V_NAME}-Release.apk \
+              "$UNALIGNED_TEMP" || \
+            $APKSIGNER sign \
+              --ks "$KS_PATH" \
+              --ks-key-alias "$ACTUAL_ALIAS" \
+              --ks-pass "pass:$KEYSTORE_PASS" \
+              --key-pass "pass:$KEYSTORE_PASS" \
+              --out output_release/GothwadManager-v${V_NAME}-Release.apk \
+              "$UNALIGNED_TEMP" || \
+            $APKSIGNER sign \
+              --ks "$KS_PATH" \
+              --ks-key-alias "$ACTUAL_ALIAS" \
+              --ks-pass "pass:$KEY_PASS" \
               --key-pass "pass:$KEY_PASS" \
               --out output_release/GothwadManager-v${V_NAME}-Release.apk \
               "$UNALIGNED_TEMP"
@@ -153,6 +191,11 @@ jobs:
             jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
               -keystore "$KS_PATH" \
               -storepass "$KEYSTORE_PASS" -keypass "$KEY_PASS" \
+              output_release/GothwadManager-v${V_NAME}-PlayStore.aab \
+              "$ACTUAL_ALIAS" || \
+            jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+              -keystore "$KS_PATH" \
+              -storepass "$KEYSTORE_PASS" -keypass "$KEYSTORE_PASS" \
               output_release/GothwadManager-v${V_NAME}-PlayStore.aab \
               "$ACTUAL_ALIAS"
             echo "Successfully signed Play Store AAB!"

@@ -180,4 +180,88 @@
     <string name="no_apps_found">No third-party apps found</string>
     <string name="close">Close</string>
     <string name="calculating">Calculating…</string>
+
+    <!-- 1. Recycle Bin / Trash Can -->
+    <string name="recycle_bin">Recycle Bin</string>
+    <string name="move_to_trash">Move to Trash</string>
+    <string name="moved_to_trash">%1$s moved to Trash</string>
+    <string name="restore">Restore</string>
+    <string name="restore_success">%1$s restored</string>
+    <string name="empty_trash">Empty Trash</string>
+    <string name="empty_trash_confirm">Permanently delete all items in Recycle Bin?</string>
+    <string name="trash_empty">Recycle Bin is empty</string>
+    <string name="trash_count">%1$d items in Trash</string>
+
+    <!-- 2. Storage Cleaner -->
+    <string name="storage_cleaner">Cleaner</string>
+    <string name="clean_junk">Clean Junk</string>
+    <string name="junk_found">Found %1$s reclaimable space</string>
+    <string name="cleaning_done">Cleaned %1$s of junk!</string>
+    <string name="large_files">Large Files (>100MB)</string>
+    <string name="empty_folders">Empty Folders</string>
+    <string name="cached_apks">Obsolete APKs</string>
+    <string name="temp_files">Cache &amp; Temp Files</string>
+    <string name="clean_now">Clean Now</string>
+    <string name="scanning_storage">Analyzing storage…</string>
+
+    <!-- 3. Bookmarks & Favorites -->
+    <string name="bookmarks">Bookmarks</string>
+    <string name="add_bookmark">⭐ Add Bookmark</string>
+    <string name="remove_bookmark">Remove Bookmark</string>
+    <string name="bookmark_added">Bookmark added: %1$s</string>
+    <string name="bookmark_removed">Bookmark removed</string>
+    <string name="no_bookmarks">No bookmarked folders yet</string>
+
+    <!-- 4. Recent Files -->
+    <string name="recent_files">Recent Files</string>
+    <string name="recent_subtitle">Files modified in the last 48 hours</string>
+    <string name="no_recent_files">No recently modified files found</string>
+
+    <!-- 5. FTP Server -->
+    <string name="ftp_server">FTP Server</string>
+    <string name="start_ftp">Start FTP Server</string>
+    <string name="stop_ftp">Stop Server</string>
+    <string name="ftp_running">FTP Server is RUNNING</string>
+    <string name="ftp_stopped">FTP Server is STOPPED</string>
+    <string name="ftp_address">ftp://%1$s:%2$d</string>
+    <string name="ftp_guide">Open Windows File Explorer or FileZilla on your PC and enter the URL above to manage files wirelessly without cables.</string>
+
+    <!-- 6. LAN / Network Scanner -->
+    <string name="lan_scanner">Network (LAN)</string>
+    <string name="scan_network">Scan Wi-Fi Devices</string>
+    <string name="scanning_network">Scanning local network…</string>
+    <string name="devices_found">%1$d active devices found on Wi-Fi</string>
+    <string name="no_devices_found">No local devices found on this subnet</string>
+
+    <!-- 7. PIN / Safe Vault -->
+    <string name="private_safe">Private Safe</string>
+    <string name="enter_pin">Enter 4-Digit PIN</string>
+    <string name="set_pin">Set New 4-Digit PIN</string>
+    <string name="confirm_pin">Confirm 4-Digit PIN</string>
+    <string name="wrong_pin">Incorrect PIN! Try again.</string>
+    <string name="pin_set_success">PIN set successfully</string>
+    <string name="pin_mismatch">PINs do not match</string>
+    <string name="move_to_vault">🔒 Move to Safe</string>
+    <string name="moved_to_vault">%1$s secured in Private Safe</string>
+    <string name="vault_empty">Private Safe is empty</string>
+    <string name="restore_from_vault">Move Out of Safe</string>
+
+    <!-- 8. Hidden Files -->
+    <string name="show_hidden_files">Show Hidden Files</string>
+    <string name="hide_hidden_files">Hide Hidden Files</string>
+    <string name="hidden_files_on">Hidden files: Visible</string>
+    <string name="hidden_files_off">Hidden files: Hidden</string>
+
+    <!-- 9. Dual-Pane Mode -->
+    <string name="dual_pane">Dual Pane</string>
+    <string name="left_pane">Left Pane</string>
+    <string name="right_pane">Right Pane</string>
+    <string name="copy_to_opposite">Copy to other pane ➔</string>
+    <string name="move_to_opposite">Move to other pane ➔</string>
+    <string name="switch_pane">Switch Pane (◄ / ►)</string>
+
+    <!-- 10. Subtitles -->
+    <string name="subtitles_detected">Subtitle found: %1$s</string>
+    <string name="play_with_subtitles">Play with Subtitles</string>
+    <string name="play_normal">Play Normal</string>
 </resources>

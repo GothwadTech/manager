@@ -2,6 +2,7 @@
 <resources>
     <!-- Backgrounds -->
     <color name="bg">#0A0E17</color>
+    <color name="background">#0A0E17</color>
     <color name="panel">#121927</color>
     <color name="panel_elevated">#182338</color>
     <color name="panel_card">#141D2E</color>
