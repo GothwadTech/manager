@@ -27,6 +27,18 @@ android {
         buildConfigField "String", "GOOGLE_DRIVE_CLIENT_ID", '""'
     }
 
+    // Ensure debug.keystore exists before signing configuration is evaluated
+    def debugKeystoreFile = file("${rootDir}/debug.keystore")
+    if (!debugKeystoreFile.exists()) {
+        def base64KeystoreFile = file("${rootDir}/debug.keystore.base64")
+        if (base64KeystoreFile.exists()) {
+            try {
+                debugKeystoreFile.bytes = java.util.Base64.getDecoder().decode(base64KeystoreFile.text.replaceAll("\\s", ""))
+            } catch (Exception ignored) {
+            }
+        }
+    }
+
     signingConfigs {
         debug {
             storeFile file("${rootDir}/debug.keystore")

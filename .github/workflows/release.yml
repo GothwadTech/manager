@@ -46,6 +46,20 @@ jobs:
             gradle wrapper --gradle-version 9.3.1
           fi
 
+      - name: Restore Debug Keystore
+        run: |
+          if [ ! -f "debug.keystore" ]; then
+            if [ -f "debug.keystore.base64" ]; then
+              echo "Decoding debug.keystore from debug.keystore.base64..."
+              tr -d '\r\n ' < debug.keystore.base64 | base64 -d > debug.keystore || true
+            fi
+            if [ ! -s "debug.keystore" ]; then
+              echo "Generating fallback debug.keystore..."
+              keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+            fi
+          fi
+          echo "debug.keystore status: $(ls -l debug.keystore)"
+
       - name: Determine Version Code and Name
         id: versioning
         run: |
@@ -92,58 +106,54 @@ jobs:
         run: |
           echo "=== Checking Required Signing Secrets ==="
           if [ -z "$KEYSTORE_BASE64" ]; then
-            echo "❌ ERROR: Keystore secret is MISSING!"
-            echo "Please set repository secret SIGNING_KEY (base64 encoded .jks / .keystore file)."
-            exit 1
+            echo "⚠️ NOTICE: Repository secret SIGNING_KEY not set. Using debug.keystore for Release signing..."
+            KS_PATH="debug.keystore"
+            KEYSTORE_PASS="android"
+            KEY_PASS="android"
+            ACTUAL_ALIAS="androiddebugkey"
+          else
+            if [ -z "$KEYSTORE_PASS" ]; then
+              echo "❌ ERROR: KEY_STORE_PASSWORD secret is MISSING!"
+              exit 1
+            fi
+            if [ -z "$KEY_ALIAS" ]; then
+              echo "❌ ERROR: ALIAS secret is MISSING!"
+              exit 1
+            fi
+            if [ -z "$KEY_PASS" ]; then
+              echo "❌ ERROR: KEY_PASSWORD secret is MISSING!"
+              exit 1
+            fi
+            echo "✅ All 4 signing secrets found in repository."
+            echo "Keystore Secret size: ${#KEYSTORE_BASE64} characters"
+            echo "Target Alias: $KEY_ALIAS"
+            echo "========================================="
+
+            # Store keystore in secure temporary location outside release outputs
+            KS_PATH="/tmp/release_key.jks"
+            rm -f "$KS_PATH"
+            
+            echo "Decoding Keystore from GitHub Secrets..."
+            echo "$KEYSTORE_BASE64" | tr -d '\r\n ' | base64 -d > "$KS_PATH" || echo "$KEYSTORE_BASE64" | base64 -d > "$KS_PATH"
+
+            if [ ! -s "$KS_PATH" ]; then
+              echo "❌ ERROR: Failed to decode base64 keystore! File is empty or invalid base64."
+              exit 1
+            fi
+
+            # Verify keystore password and alias
+            echo "Verifying keystore password and listing aliases..."
+            if ! keytool -list -keystore "$KS_PATH" -storepass "$KEYSTORE_PASS" > /tmp/keytool_output.txt 2>&1; then
+              echo "❌ ERROR: Keystore password incorrect or keystore corrupted!"
+              cat /tmp/keytool_output.txt
+              exit 1
+            fi
+
+            ACTUAL_ALIAS="$KEY_ALIAS"
           fi
-          if [ -z "$KEYSTORE_PASS" ]; then
-            echo "❌ ERROR: KEY_STORE_PASSWORD secret is MISSING!"
-            exit 1
-          fi
-          if [ -z "$KEY_ALIAS" ]; then
-            echo "❌ ERROR: ALIAS secret is MISSING!"
-            exit 1
-          fi
-          if [ -z "$KEY_PASS" ]; then
-            echo "❌ ERROR: KEY_PASSWORD secret is MISSING!"
-            exit 1
-          fi
-          echo "✅ All 4 signing secrets found in repository."
-          echo "Keystore Secret size: ${#KEYSTORE_BASE64} characters"
-          echo "Target Alias: $KEY_ALIAS"
-          echo "========================================="
+          echo "Using Keystore: $KS_PATH, Alias: $ACTUAL_ALIAS"
 
           mkdir -p release_out
-          APK=$(find app/build/outputs/apk/release/ -name "*.apk" | head -n 1)
-          DEBUG_APK=$(find app/build/outputs/apk/debug/ -name "*.apk" | head -n 1)
-          AAB=$(find app/build/outputs/bundle/release/ -name "*.aab" | head -n 1)
-
-          if [ -n "$DEBUG_APK" ]; then
-            cp "$DEBUG_APK" release_out/GothwadManager-v${V_NAME}-Debug.apk
-            echo "Copied Debug APK: release_out/GothwadManager-v${V_NAME}-Debug.apk"
-          fi
-
-          # Store keystore in secure temporary location outside release outputs
-          KS_PATH="/tmp/release_key.jks"
-          rm -f "$KS_PATH"
-          
-          echo "Decoding Keystore from GitHub Secrets..."
-          echo "$KEYSTORE_BASE64" | tr -d '\r\n ' | base64 -d > "$KS_PATH" || echo "$KEYSTORE_BASE64" | base64 -d > "$KS_PATH"
-
-          if [ ! -s "$KS_PATH" ]; then
-            echo "❌ ERROR: Failed to decode base64 keystore! File is empty or invalid base64."
-            exit 1
-          fi
-
-          # Verify keystore password and alias
-          echo "Verifying keystore password and listing aliases..."
-          if ! keytool -list -keystore "$KS_PATH" -storepass "$KEYSTORE_PASS" > /tmp/keytool_output.txt 2>&1; then
-            echo "❌ ERROR: Keystore password incorrect or keystore corrupted!"
-            cat /tmp/keytool_output.txt
-            exit 1
-          fi
-
-          ACTUAL_ALIAS="$KEY_ALIAS"
           echo "Using Keystore Alias: $ACTUAL_ALIAS"
 
           ZIPALIGN=$(find $ANDROID_HOME/build-tools/ -name "zipalign" | sort -V | tail -n 1)
@@ -196,9 +206,11 @@ jobs:
             echo "✅ Successfully signed Play Store AAB!"
           fi
 
-          # Securely destroy the temporary keystore file
-          rm -f "$KS_PATH"
-          echo "Keystore securely cleaned up."
+          # Securely destroy the temporary release keystore file if created
+          if [ "$KS_PATH" != "debug.keystore" ]; then
+            rm -f "$KS_PATH"
+            echo "Release keystore securely cleaned up."
+          fi
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
