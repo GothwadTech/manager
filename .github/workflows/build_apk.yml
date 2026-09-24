@@ -150,12 +150,43 @@ jobs:
           fi
           echo "Using Keystore: $KS_PATH, Alias: $ACTUAL_ALIAS"
 
+          mkdir -p output_release
+
           echo "Locating generated Release APK, Debug APK, and AAB..."
-          echo "Using Keystore Alias: $ACTUAL_ALIAS"
+          UNSIGNED_APK=$(find app/build/outputs/apk/release/ -name "*.apk" 2>/dev/null | head -n 1)
+          if [ -z "$UNSIGNED_APK" ]; then
+            UNSIGNED_APK=$(find app/build/outputs/ -name "*release*.apk" 2>/dev/null | head -n 1)
+          fi
           
+          DEBUG_APK=$(find app/build/outputs/apk/debug/ -name "*.apk" 2>/dev/null | head -n 1)
+          if [ -z "$DEBUG_APK" ]; then
+            DEBUG_APK=$(find app/build/outputs/ -name "*debug*.apk" 2>/dev/null | head -n 1)
+          fi
+
+          UNSIGNED_AAB=$(find app/build/outputs/bundle/release/ -name "*.aab" 2>/dev/null | head -n 1)
+          if [ -z "$UNSIGNED_AAB" ]; then
+            UNSIGNED_AAB=$(find app/build/outputs/ -name "*.aab" 2>/dev/null | head -n 1)
+          fi
+
+          echo "Found Release APK: $UNSIGNED_APK"
+          echo "Found Debug APK:   $DEBUG_APK"
+          echo "Found Bundle AAB:  $UNSIGNED_AAB"
+
+          if [ -n "$DEBUG_APK" ]; then
+            cp "$DEBUG_APK" output_release/GothwadManager-v${V_NAME}-Debug.apk
+            echo "Copied Debug APK: output_release/GothwadManager-v${V_NAME}-Debug.apk"
+          fi
+
           # Find latest zipalign and apksigner dynamically
-          ZIPALIGN=$(find $ANDROID_HOME/build-tools/ -name "zipalign" | sort -V | tail -n 1)
-          APKSIGNER=$(find $ANDROID_HOME/build-tools/ -name "apksigner" | sort -V | tail -n 1)
+          SDK_ROOT="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          ZIPALIGN=$(find "$SDK_ROOT/build-tools/" -name "zipalign" 2>/dev/null | sort -V | tail -n 1)
+          APKSIGNER=$(find "$SDK_ROOT/build-tools/" -name "apksigner" 2>/dev/null | sort -V | tail -n 1)
+          if [ -z "$APKSIGNER" ] && command -v apksigner >/dev/null 2>&1; then
+            APKSIGNER="apksigner"
+          fi
+          if [ -z "$ZIPALIGN" ] && command -v zipalign >/dev/null 2>&1; then
+            ZIPALIGN="zipalign"
+          fi
           
           # 1. Sign APK
           if [ -n "$UNSIGNED_APK" ]; then
@@ -224,9 +255,7 @@ jobs:
           prerelease: false
           generate_release_notes: true
           files: |
-            output_release/GothwadManager-v${{ steps.versioning.outputs.v_name }}-Release.apk
-            output_release/GothwadManager-v${{ steps.versioning.outputs.v_name }}-Debug.apk
-            output_release/GothwadManager-v${{ steps.versioning.outputs.v_name }}-PlayStore.aab
+            output_release/*
 
       - name: Upload Signed Release APK, Debug APK & AAB Artifacts
         uses: actions/upload-artifact@v4
