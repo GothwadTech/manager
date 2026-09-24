@@ -1,34 +1,82 @@
 # Gothwad Manager
 
-Gothwad Manager is a modern, high-performance file manager and local Wi-Fi transfer hub designed specifically for Android TV and TV boxes, developed by **Gothwad Tech**.
-
-## Features
-
-- **TV Remote-First UI**: Seamless D-pad navigation with vibrant focus borders and illuminated indicators tailored for large screens.
-- **Color-Coded File Badges**: Visual indicators for APKs, Videos, Music, Photos, Documents, and Folders.
-- **Fast Web Transfer**: Upload APKs, movies, music, and documents directly from your phone browser via local Wi-Fi.
-- **QR Code Pairing**: Instant connection by scanning the on-screen QR code from any smartphone.
-- **File Operations**: Create folders, rename, copy, cut, paste, and delete with full remote control support.
-- **One-Click APK Installer**: Directly trigger package installation for sideloading apps on Android TV.
-- **Pure English Interface**: Clean, distraction-free English localization throughout the TV app and mobile web portal.
-
-## TV Remote Shortcuts
-
-| Action | TV Remote Key |
-| --- | --- |
-| Move through files & buttons | **D-pad Up / Down / Left / Right** |
-| Open file / Enter folder | **OK / Enter / D-pad Center** |
-| Permanently delete item | **Long-press OK / Enter** |
-| File actions (Copy, Cut, Paste, Rename) | **Menu / Settings Key** |
-| Return to parent folder | **Back Key** |
-| Return to root storage | **Home Button** in top toolbar |
-
-## Web Transfer Guide
-
-1. Open **Remote Transfer** in Gothwad Manager on your TV.
-2. Connect your phone to the same Wi-Fi network as the TV.
-3. Scan the on-screen QR code or type the displayed URL into your phone's browser.
-4. Select files to upload. Uploaded APKs can be installed on the TV with a single click.
+**Gothwad Manager** is a fast, powerful, and lightweight all-in-one File Explorer and Manager built for Android devices, tablets, foldables, and Android TV.
 
 ---
-Developed by **Gothwad Tech**
+
+## 🌟 Key Features
+
+- **📁 Complete File Operations**: Cut, copy, paste, delete, rename, compress, extract, and search files across internal storage, SD cards, and USB OTG.
+- **⚡ Super Lightweight & Fast**: Designed to deliver maximum performance with minimal system resource consumption.
+- **🖥️ Android TV & Leanback Support**: Fully optimized for TV screens with clean directional-pad (D-pad) navigation and custom banners.
+- **🌐 Network & FTP Server**: Transfer files seamlessly between your phone and PC over Wi-Fi without cables using the built-in FTP/FTPS server.
+- **📱 App & Process Management**: Inspect installed applications, back up APKs, manage storage, and uninstall apps in batch.
+- **🔒 Security & Privacy**: Secure your sensitive files with built-in PIN protection and granular access controls.
+- **💾 Root & USB Storage**: Advanced explorer for rooted devices and direct support for USB mass storage devices (FAT/FAT32/exFAT).
+- **🎨 Modern Material Theme**: Customizable primary and accent colors with full Dark Mode and RTL (Right-to-Left) layout support.
+
+---
+
+## 🛠️ Project Structure & Architecture
+
+```
+├── app/
+│   ├── src/main/
+│   │   ├── java/com/gothwad/manager/     # Application source code
+│   │   │   ├── adapter/                  # RecyclerView adapters
+│   │   │   ├── fragment/                 # UI fragments (Home, Directory, Server, etc.)
+│   │   │   ├── model/                    # Data models and DocumentsContract
+│   │   │   ├── provider/                 # Document & Storage content providers
+│   │   │   ├── receiver/                 # Broadcast receivers
+│   │   │   ├── service/                  # FTP server & background services
+│   │   │   ├── setting/                  # Settings and preferences
+│   │   │   └── ui/                       # Custom views and Material widgets
+│   │   ├── res/                          # Resources (layouts, drawables, English values, mipmaps)
+│   │   └── AndroidManifest.xml           # App manifest with modern storage & TV permissions
+│   └── build.gradle                      # App-level build script (com.gothwad.manager)
+├── .github/
+│   └── workflows/
+│       ├── build_apk.yml                 # Automated workflow for APK and AAB builds
+│       └── release.yml                   # Automated GitHub Releases on version tags
+├── gradle/                               # Gradle wrapper and configurations
+├── build.gradle                          # Root Gradle configuration
+├── settings.gradle                       # Root project settings
+└── metadata.json                         # Project metadata
+```
+
+---
+
+## 🚀 Building & Running
+
+### Prerequisites
+- JDK 17
+- Android SDK 36 (Build Tools 36.0.0, Min SDK 24)
+
+### Build Commands
+
+```bash
+# Build Debug APK
+./gradlew assembleDebug
+
+# Build Release APK
+./gradlew assembleRelease
+
+# Build Play Store Android App Bundle (AAB)
+./gradlew bundleRelease
+```
+
+---
+
+## 📦 CI/CD Workflows
+
+The repository includes pre-configured GitHub Actions workflows in `.github/workflows/`:
+- **`build_apk.yml`**: Triggers on push or manual dispatch to compile signed Debug and Release APKs and Play Store AAB bundles.
+- **`release.yml`**: Generates automated releases with version tagging and artifact uploads.
+
+---
+
+## 📄 Package Identity
+
+- **Application ID**: `com.gothwad.manager`
+- **Default Language**: English
+- **Supported Formats**: ZIP, TAR, RAR, APK, Images, Audio, Video, Documents

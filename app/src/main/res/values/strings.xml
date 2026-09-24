@@ -1,267 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Gothwad Manager</string>
-    <string name="home">Home</string>
-    <string name="new_folder">New folder</string>
-    <string name="remote_transfer">Remote transfer</string>
-    <string name="open">Open</string>
-    <string name="install">Install</string>
-    <string name="rename">Rename</string>
-    <string name="delete">Delete</string>
-    <string name="copy">Copy</string>
-    <string name="cut">Cut</string>
-    <string name="paste">Paste</string>
-    <string name="cancel">Cancel</string>
-    <string name="confirm">OK</string>
-    <string name="create">Create</string>
-    <string name="folder">Folder</string>
-    <string name="empty_directory">This folder is empty</string>
-    <string name="settings_key_hint">Settings key: copy, cut, paste, rename, or permanently delete the selected file/folder</string>
-    <string name="transfer_heading">Upload files from your phone to the TV</string>
-    <string name="upload_qr_description">QR code for the upload address</string>
+<!-- Copyright (C) 2013 The Android Open Source Project
 
-    <string name="storage_permission_denied">Storage permission was not granted. Only the app upload folder is available.</string>
-    <string name="allow_all_files_access">Please grant All Files Access to manage files on TV storage</string>
-    <string name="current_path">Current path: %1$s</string>
-    <string name="saved_path">Full file save path: %1$s</string>
-    <string name="cannot_access_directory">This folder cannot be accessed</string>
-    <string name="top_directory_reached">The top-level folder has been reached</string>
-    <string name="folder_name_hint">Folder name</string>
-    <string name="invalid_simple_name">The name cannot be empty or contain a path separator</string>
-    <string name="file_or_folder_exists">A file or folder with that name already exists</string>
-    <string name="create_folder_failed">Could not create the folder. The current folder may be read-only.</string>
-    <string name="invalid_name">Invalid name</string>
-    <string name="file_exists">A file with that name already exists</string>
-    <string name="rename_failed">Rename failed</string>
-    <string name="permanent_delete">Permanently delete</string>
-    <string name="delete_confirm">Permanently delete “%1$s”? This action cannot be undone.</string>
-    <string name="delete_failed">Delete failed</string>
-    <string name="delete_failed_detailed">Delete failed. The file may be in use or the folder may be read-only.</string>
-    <string name="select_file_first">Select an item in the file list first</string>
-    <string name="copied_to_clipboard">Ready to copy: %1$s</string>
-    <string name="cut_to_clipboard">Ready to move: %1$s</string>
-    <string name="paste_success">Pasted into: %1$s</string>
-    <string name="paste_failed">Paste failed. Check the available space and folder permissions.</string>
-    <string name="clipboard_source_missing">The copied or cut item no longer exists</string>
-    <string name="cannot_paste_into_itself">A folder cannot be pasted into itself or one of its subfolders</string>
-    <string name="cut_same_folder">The item is already in this folder</string>
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
 
-    <string name="file_not_found">File not found</string>
-    <string name="allow_unknown_sources_retry">Allow Gothwad Manager to install unknown apps, then open the APK again</string>
-    <string name="allow_unknown_sources_settings">Allow installation from unknown sources in system settings</string>
-    <string name="no_app_to_open_file">No app can open this file</string>
-    <string name="invalid_file_name">Invalid file name</string>
-    <string name="too_many_duplicate_names">Too many files have the same name</string>
+          http://www.apache.org/licenses/LICENSE-2.0
 
-    <string name="http_start_failed">Could not start the HTTP server</string>
-    <string name="ports_unavailable">Ports 8080–8090 are unavailable</string>
-    <string name="connect_wifi_first">Connect to Wi-Fi first</string>
-    <string name="no_lan_address">The server started, but no local IPv4 address was found</string>
-    <string name="server_running">Server running · Available only while this page is open · Phone and TV must use the same Wi-Fi</string>
-    <string name="qr_generation_failed">The server is running, but QR code generation failed: %1$s</string>
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
 
-    <string name="http_invalid_link">This link is invalid or has expired</string>
-    <string name="http_not_found">Not found</string>
-    <string name="http_operation_failed">Operation failed: %1$s</string>
-    <string name="http_no_file">No file was received</string>
-    <string name="http_file_too_large">The file exceeds the 2 GB limit</string>
-    <string name="http_insufficient_space">Not enough storage space on the TV</string>
-    <string name="http_upload_success">Upload complete: %1$s</string>
-    <string name="http_opened_on_tv">Opened on the TV</string>
-    <string name="http_deleted">Permanently deleted</string>
-    <string name="http_unknown_action">Unknown action</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <!-- Title of the documents application [CHAR LIMIT=32] -->
 
-    <string name="web_no_uploads">No uploaded files</string>
-    <string name="web_install_on_tv">Install on TV</string>
-    <string name="web_open_on_tv">Open on TV</string>
-    <string name="web_upload_heading">Upload files to the TV</string>
-    <string name="web_choose_files">Choose files</string>
-    <string name="web_uploaded_files">Uploaded files</string>
-    <string name="web_uploading_prefix">Uploading</string>
-    <string name="web_network_error">Network error</string>
-    <string name="web_delete_prefix">Permanently delete</string>
-    <string name="web_delete_suffix">\? This action cannot be undone.</string>
+    <!-- Action bar title prompting user to choose a location to open a document from [CHAR LIMIT=32] -->
+    <!-- Action bar title prompting user to choose a location to save a document to [CHAR LIMIT=32] -->
+    <string name="title_save">Save to</string>
 
-    <!-- Top 10 Features Strings -->
-    <!-- 1. Search -->
-    <string name="search">Search</string>
-    <string name="search_hint">Enter file or folder name…</string>
-    <string name="search_in_path">Search in %1$s</string>
-    <string name="search_results_title">Found %1$d item(s) for \"%2$s\"</string>
-    <string name="clear_search">Clear Filter</string>
-    <string name="no_search_results">No matching files found</string>
+    <!-- Menu item that creates a new directory/folder at the current location [CHAR LIMIT=24] -->
+    <string name="menu_create_dir">Create folder</string>
+    <!-- Menu item that switches view to show documents as a large-format grid of thumbnails [CHAR LIMIT=24] -->
+    <string name="menu_grid">Grid view</string>
+    <!-- Menu item that switches view to show documents as a list [CHAR LIMIT=24] -->
+    <string name="menu_list">List view</string>
+    <!-- Menu item that switches the criteria with which documents are sorted [CHAR LIMIT=24] -->
+    <string name="menu_sort">Sort by</string>
+    <!-- Menu item that enters a mode to search for documents [CHAR LIMIT=24] -->
+    <string name="menu_search">Search</string>
+    <!-- Menu item that enters activity to change settings [CHAR LIMIT=24] -->
+    <string name="menu_settings">Settings</string>
 
-    <!-- 2. Sort -->
-    <string name="sort">Sort</string>
-    <string name="sort_by">Sort files by</string>
-    <string name="sort_name_asc">Name (A to Z)</string>
-    <string name="sort_name_desc">Name (Z to A)</string>
-    <string name="sort_date_desc">Date modified (Newest first)</string>
-    <string name="sort_date_asc">Date modified (Oldest first)</string>
-    <string name="sort_size_desc">File size (Largest first)</string>
-    <string name="sort_size_asc">File size (Smallest first)</string>
-    <string name="sort_type">File type / Extension</string>
+    <!-- Menu item title that opens the selected documents [CHAR LIMIT=24] -->
+    <string name="menu_open">Open</string>
+    <!-- Menu item title that saves the current document [CHAR LIMIT=24] -->
+    <string name="menu_save">Save</string>
+    <!-- Menu item title that shares the selected documents [CHAR LIMIT=24] -->
+    <string name="menu_share">Share</string>
+    <!-- Menu item title that deletes the selected documents [CHAR LIMIT=24] -->
+    <string name="menu_delete">Delete</string>
+    <!-- Menu item title that selects the current directory [CHAR LIMIT=48] -->
+    <string name="menu_select">Select \"<xliff:g id="directory" example="My Directory">^1</xliff:g>\"</string>
 
-    <!-- 3. Storage & Drive Switcher -->
-    <string name="storage_overview">Storage</string>
-    <string name="select_storage_drive">Select Storage Drive</string>
-    <string name="internal_storage">Internal Storage</string>
-    <string name="usb_storage">USB / External Drive</string>
-    <string name="app_uploads_folder">App Uploads Folder</string>
-    <string name="storage_stats">%1$s free of %2$s (%3$d%% used)</string>
+    <!-- Menu item that reveals internal storage built into the device [CHAR LIMIT=24] -->
+    <!-- Menu item that hides internal storage built into the device [CHAR LIMIT=24] -->
 
-    <!-- 4. Categories -->
-    <string name="categories">Categories</string>
-    <string name="category_all">All Files</string>
-    <string name="category_videos">Videos</string>
-    <string name="category_music">Music &amp; Audio</string>
-    <string name="category_photos">Photos &amp; Images</string>
-    <string name="category_apks">APKs &amp; Apps</string>
-    <string name="category_documents">Documents</string>
-    <string name="category_archives">Archives (ZIP)</string>
-    <string name="category_title">%1$s (%2$d items)</string>
+    <!-- Menu item that reveals the sizes of displayed files [CHAR LIMIT=24] -->
+    <!-- Menu item that hides the sizes of displayed files [CHAR LIMIT=24] -->
 
-    <!-- 5. Rename & File Actions -->
-    <string name="action_options">Options</string>
-    <string name="properties">Properties</string>
+    <!-- Action mode title summarizing the number of documents selected [CHAR LIMIT=32] -->
+    <string name="mode_selected_count"><xliff:g id="count" example="3">%1$d</xliff:g> selected</string>
 
-    <!-- 6. ZIP Archive -->
-    <string name="extract_zip">Extract ZIP Here</string>
-    <string name="compress_to_zip">Compress to ZIP</string>
-    <string name="extracting_zip">Extracting archive…</string>
-    <string name="zip_extracted_success">Extracted to: %1$s</string>
-    <string name="compressing_zip">Compressing files to ZIP…</string>
-    <string name="zip_compressed_success">ZIP created: %1$s</string>
-    <string name="zip_failed">ZIP operation failed</string>
+    <!-- Mode that sorts documents by their display name alphabetically [CHAR LIMIT=24] -->
+    <string name="sort_name">By name</string>
+    <!-- Mode that sorts documents by their last modified time in descending order; most recent first [CHAR LIMIT=24] -->
+    <string name="sort_date">By date modified</string>
+    <!-- Mode that sorts documents by their file size in descending order; largest first [CHAR LIMIT=24] -->
+    <string name="sort_size">By size</string>
 
-    <!-- 7. Viewers -->
-    <string name="image_viewer">Image Viewer</string>
-    <string name="text_viewer">Text Viewer</string>
-    <string name="previous_item">Previous</string>
-    <string name="next_item">Next</string>
-    <string name="image_info">%1$s  ·  %2$d × %3$d  ·  %4$s</string>
-    <string name="text_meta">%1$d lines  ·  %2$s  ·  UTF-8</string>
-    <string name="text_load_error">Could not read text file.</string>
+    <!-- Accessibility title to open the drawer showing all roots where documents can be stored [CHAR LIMIT=32] -->
+    <string name="drawer_open">Show roots</string>
+    <!-- Accessibility title to close the drawer showing all roots where documents can be stored [CHAR LIMIT=32] -->
+    <string name="drawer_close">Hide roots</string>
 
-    <!-- 8. Properties -->
-    <string name="file_properties_title">Properties: %1$s</string>
-    <string name="prop_name">Name: %1$s</string>
-    <string name="prop_type">Type: %1$s</string>
-    <string name="prop_size">Size: %1$s (%2$d bytes)</string>
-    <string name="prop_location">Location: %1$s</string>
-    <string name="prop_modified">Modified: %1$s</string>
-    <string name="prop_items">Contains: %1$d files, %2$d folders</string>
-    <string name="prop_permissions">Readable: %1$s · Writable: %2$s</string>
+    <!-- Toast shown when saving a document failed with an error [CHAR LIMIT=48] -->
+    <string name="save_error">Failed to save document</string>
+    <!-- Toast shown when creating a folder failed with an error [CHAR LIMIT=48] -->
+    <string name="create_error">Failed to create folder</string>
+    <!-- Error message shown when querying for a list of documents failed [CHAR LIMIT=48] -->
+    <string name="query_error">Failed to query documents</string>
 
-    <!-- 9. Multi-Select & Batch Operations -->
-    <string name="multiselect">Multi-Select</string>
-    <string name="select_all">Select All</string>
-    <string name="deselect_all">Deselect All</string>
-    <string name="selected_count">%1$d Selected</string>
-    <string name="batch_delete">Delete (%1$d)</string>
-    <string name="batch_copy">Copy (%1$d)</string>
-    <string name="batch_move">Move (%1$d)</string>
-    <string name="batch_zip">ZIP (%1$d)</string>
-    <string name="batch_delete_confirm">Permanently delete %1$d selected items? This cannot be undone.</string>
-    <string name="batch_delete_success">Deleted %1$d items</string>
-    <string name="batch_copied">%1$d items ready to copy</string>
-    <string name="batch_cut">%1$d items ready to move</string>
-    <string name="exit_multiselect">Exit</string>
+    <!-- Title of storage root location that contains recently modified or used documents [CHAR LIMIT=24] -->
+    <string name="root_recent">Recent</string>
+    <!-- Subtitle of storage root indicating the total free space available, in bytes [CHAR LIMIT=24] -->
+    <string name="root_available_bytes"><xliff:g id="size" example="3GB">%1$s</xliff:g> free</string>
 
-    <!-- 10. App Manager -->
-    <string name="app_manager">Apps</string>
-    <string name="installed_apps">Installed TV Apps</string>
-    <string name="launch_app">Launch</string>
-    <string name="backup_apk">Backup APK</string>
-    <string name="uninstall_app">Uninstall</string>
-    <string name="app_backup_success">APK backed up to: %1$s</string>
-    <string name="app_backup_failed">Failed to extract APK</string>
-    <string name="loading_apps">Scanning installed apps…</string>
-    <string name="no_apps_found">No third-party apps found</string>
-    <string name="close">Close</string>
-    <string name="calculating">Calculating…</string>
+    <!-- Header title for list of storage roots that contains cloud services [CHAR LIMIT=24] -->
+    <!-- Header title for list of storage roots that contains shortcuts to documents that may be available elsewhere [CHAR LIMIT=24] -->
+    <!-- Header title for list of storage roots that contains physical devices [CHAR LIMIT=24] -->
+    <!-- Header title for list of additional apps that can provide documents [CHAR LIMIT=24] -->
 
-    <!-- 1. Recycle Bin / Trash Can -->
-    <string name="recycle_bin">Recycle Bin</string>
-    <string name="move_to_trash">Move to Trash</string>
-    <string name="moved_to_trash">%1$s moved to Trash</string>
-    <string name="restore">Restore</string>
-    <string name="restore_success">%1$s restored</string>
-    <string name="empty_trash">Empty Trash</string>
-    <string name="empty_trash_confirm">Permanently delete all items in Recycle Bin?</string>
-    <string name="trash_empty">Recycle Bin is empty</string>
-    <string name="trash_count">%1$d items in Trash</string>
+    <!-- Text shown when a directory of documents is empty [CHAR LIMIT=24] -->
+    <string name="empty">No items</string>
 
-    <!-- 2. Storage Cleaner -->
-    <string name="storage_cleaner">Cleaner</string>
-    <string name="clean_junk">Clean Junk</string>
-    <string name="junk_found">Found %1$s reclaimable space</string>
-    <string name="cleaning_done">Cleaned %1$s of junk!</string>
-    <string name="large_files">Large Files (>100MB)</string>
-    <string name="empty_folders">Empty Folders</string>
-    <string name="cached_apks">Obsolete APKs</string>
-    <string name="temp_files">Cache &amp; Temp Files</string>
-    <string name="clean_now">Clean Now</string>
-    <string name="scanning_storage">Analyzing storage…</string>
+    <!-- Toast shown when no app can be found to open the selected document [CHAR LIMIT=48] -->
+    <string name="toast_no_application">Can\'t open file</string>
+    <!-- Toast shown when some of the selected documents failed to be deleted [CHAR LIMIT=48] -->
+    <string name="toast_failed_delete">Unable to delete some documents</string>
 
-    <!-- 3. Bookmarks & Favorites -->
-    <string name="bookmarks">Bookmarks</string>
-    <string name="add_bookmark">⭐ Add Bookmark</string>
-    <string name="remove_bookmark">Remove Bookmark</string>
-    <string name="bookmark_added">Bookmark added: %1$s</string>
-    <string name="bookmark_removed">Bookmark removed</string>
-    <string name="no_bookmarks">No bookmarked folders yet</string>
-
-    <!-- 4. Recent Files -->
-    <string name="recent_files">Recent Files</string>
-    <string name="recent_subtitle">Files modified in the last 48 hours</string>
-    <string name="no_recent_files">No recently modified files found</string>
-
-    <!-- 5. FTP Server -->
-    <string name="ftp_server">FTP Server</string>
-    <string name="start_ftp">Start FTP Server</string>
-    <string name="stop_ftp">Stop Server</string>
-    <string name="ftp_running">FTP Server is RUNNING</string>
-    <string name="ftp_stopped">FTP Server is STOPPED</string>
-    <string name="ftp_address">ftp://%1$s:%2$d</string>
-    <string name="ftp_guide">Open Windows File Explorer or FileZilla on your PC and enter the URL above to manage files wirelessly without cables.</string>
-
-    <!-- 6. LAN / Network Scanner -->
-    <string name="lan_scanner">Network (LAN)</string>
-    <string name="scan_network">Scan Wi-Fi Devices</string>
-    <string name="scanning_network">Scanning local network…</string>
-    <string name="devices_found">%1$d active devices found on Wi-Fi</string>
-    <string name="no_devices_found">No local devices found on this subnet</string>
-
-    <!-- 7. PIN / Safe Vault -->
-    <string name="private_safe">Private Safe</string>
-    <string name="enter_pin">Enter 4-Digit PIN</string>
-    <string name="set_pin">Set New 4-Digit PIN</string>
-    <string name="confirm_pin">Confirm 4-Digit PIN</string>
-    <string name="wrong_pin">Incorrect PIN! Try again.</string>
-    <string name="pin_set_success">PIN set successfully</string>
-    <string name="pin_mismatch">PINs do not match</string>
-    <string name="move_to_vault">🔒 Move to Safe</string>
-    <string name="moved_to_vault">%1$s secured in Private Safe</string>
-    <string name="vault_empty">Private Safe is empty</string>
-    <string name="restore_from_vault">Move Out of Safe</string>
-
-    <!-- 8. Hidden Files -->
-    <string name="show_hidden_files">Show Hidden Files</string>
-    <string name="hide_hidden_files">Hide Hidden Files</string>
-    <string name="hidden_files_on">Hidden files: Visible</string>
-    <string name="hidden_files_off">Hidden files: Hidden</string>
-
-    <!-- 9. Dual-Pane Mode -->
-    <string name="dual_pane">Dual Pane</string>
-    <string name="left_pane">Left Pane</string>
-    <string name="right_pane">Right Pane</string>
-    <string name="copy_to_opposite">Copy to other pane ➔</string>
-    <string name="move_to_opposite">Move to other pane ➔</string>
-    <string name="switch_pane">Switch Pane (◄ / ►)</string>
-
-    <!-- 10. Subtitles -->
-    <string name="subtitles_detected">Subtitle found: %1$s</string>
-    <string name="play_with_subtitles">Play with Subtitles</string>
-    <string name="play_normal">Play Normal</string>
+    <!-- Title of dialog when prompting user to select an app to share documents with [CHAR LIMIT=32] -->
+    <string name="share_via">Share via</string>
+    <string name="cloud_gdrive">Google Drive</string>
+    <string name="cloud_dropbox">Dropbox</string>
+    <string name="cloud_onedrive">One Drive</string>
+    <string name="cloud_box">Box</string>
+    <string name="network_ftp">FTP</string>
 </resources>
