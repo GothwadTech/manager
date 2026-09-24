@@ -21,8 +21,6 @@ package com.gothwad.manager.root;
 
 import android.util.Log;
 
-import com.stericson.RootTools.RootTools;
-
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -135,6 +133,16 @@ public class RootCommands {
         return mDirContent;
     }
 
+    public static boolean remount(String path, String mountType) {
+        try {
+            execute("mount -o remount," + mountType + " " + getCommandLineString(path));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     // Create Directory with root
     public static boolean createRootdir(String parentPath, String name) {
         File dir = new File(parentPath + File.separator + name);
@@ -143,7 +151,7 @@ public class RootCommands {
 
         try {
             if (!readReadWriteFile())
-                RootTools.remount(parentPath, "rw");
+                remount(parentPath, "rw");
 
             execute("mkdir " + getCommandLineString(dir.getAbsolutePath()));
             return true;
@@ -163,7 +171,7 @@ public class RootCommands {
 
         try {
             if (!readReadWriteFile())
-                RootTools.remount(parentPath, "rw");
+                remount(parentPath, "rw");
 
             execute("touch " + getCommandLineString(dir.getAbsolutePath()));
             return true;
@@ -178,7 +186,7 @@ public class RootCommands {
     public static boolean moveCopyRoot(String old, String newDir) {
         try {
             if (!readReadWriteFile())
-                RootTools.remount(newDir, "rw");
+                remount(newDir, "rw");
 
             execute("cp -fr " + getCommandLineString(old) + " "
                     + getCommandLineString(newDir));
@@ -201,7 +209,7 @@ public class RootCommands {
 
         try {
             if (!readReadWriteFile())
-                RootTools.remount(path, "rw");
+                remount(path, "rw");
 
             execute("mv " + getCommandLineString(file.getAbsolutePath()) + " "
                     + getCommandLineString(newf.getAbsolutePath()));
@@ -225,7 +233,7 @@ public class RootCommands {
 
         try {
             if (!readReadWriteFile())
-                RootTools.remount(before.getPath(), "rw");
+                remount(before.getPath(), "rw");
 
             execute("mv " + getCommandLineString(file.getAbsolutePath()) + " "
                     + getCommandLineString(newf.getAbsolutePath()));
@@ -241,7 +249,7 @@ public class RootCommands {
     public static boolean deleteFileRoot(String path) {
         try {
             if (!readReadWriteFile())
-                RootTools.remount(path, "rw");
+                remount(path, "rw");
 
             if (new File(path).isDirectory()) {
                 execute("rm -f -r " + getCommandLineString(path));
@@ -359,7 +367,7 @@ public class RootCommands {
     public static boolean changeGroupOwner(File file, String owner, String group) {
         try {
             if (!readReadWriteFile())
-                RootTools.remount(file.getAbsolutePath(), "rw");
+                remount(file.getAbsolutePath(), "rw");
 
             execute("chown " + owner + "." + group + " "
                     + getCommandLineString(file.getAbsolutePath()));
@@ -374,7 +382,7 @@ public class RootCommands {
     public static boolean applyPermissions(File file, Permissions permissions) {
         try {
             if (!readReadWriteFile())
-                RootTools.remount(file.getAbsolutePath(), "rw");
+                remount(file.getAbsolutePath(), "rw");
 
             execute("chmod " + Permissions.toOctalPermission(permissions) + " "
                     + getCommandLineString(file.getAbsolutePath()));

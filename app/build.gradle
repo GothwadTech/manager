@@ -77,7 +77,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.jaredrummler:android-processes:1.1.1'
     implementation 'com.github.mjdev:libaums:0.5.5'
     implementation 'org.apache.ftpserver:ftpserver-core:1.1.1'
